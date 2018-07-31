@@ -22,6 +22,7 @@
     
 <script>
 
+/*
     var connection = new autobahn.Connection({url: 'ws://127.0.0.1:8080/'});
     connection.onopen = function (session) {
 
@@ -34,8 +35,9 @@
         session.subscribe('GPS', onevent);
 
     }
+*/
 
-/*
+
     var conn = new autobahn.Session('ws://localhost:8080',
         function() {
             conn.subscribe('GPS', function(topic, data) {
@@ -49,7 +51,6 @@
         {'skipSubprotocolCheck': true}
     );
 
-*/
 
 </script>
 

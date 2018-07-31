@@ -1,9 +1,9 @@
 <?php
 
-//Har ikke laget autoloader
+//Har ikke laget autoloader for mine klasser enda
 
-require_once('../Sensor.php');
-require_once('../SensorZMQ.php');
+require_once('../publishers/Sensor.php');
+require_once('../publishers/SensorZMQ.php');
 
 /*
 $sensesors[] = new SensorZMQ('GPS');
@@ -13,10 +13,18 @@ foreach ($sensesors as $sensor) {
 }
 */
 
+$debug = true;
+
 $run = true;
 $sensor = new SensorZMQ('GPS');
 
 while($run) {
-    $sensor->update();
-    sleep(3);
+    $data = $sensor->update();
+
+    if ($debug) {
+        echo "publish with data: \n", print_r($data, true), "\n";
+        
+    }
+
+    sleep(3); //Just for test
 }

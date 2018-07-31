@@ -13,6 +13,7 @@ class SensorZMQ extends Sensor
         $this->messageQueue = new ZMQContext();
         $this->socket = $this->messageQueue->getSocket(ZMQ::SOCKET_PUSH, 'sensor pusher');
         $this->socket->connect("tcp://localhost:{$this->port}");
+
     }
 
     protected function getSensorData()
@@ -34,6 +35,8 @@ class SensorZMQ extends Sensor
     {
         $data = $this->getSensorData();
         $this->sendSensorData($data);
+
+        return $data;
     }
    
 }

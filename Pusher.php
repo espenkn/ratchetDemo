@@ -25,6 +25,10 @@ class Pusher implements WampServerInterface
      * @param string JSON'ified string we'll receive from ZeroMQ
      */
     public function onSensorEntry($entry) {
+
+        echo 'Revice data';
+
+        
         $entryData = json_decode($entry, true);
 
         // If the lookup topic object isn't set there is no one to publish to
@@ -42,14 +46,17 @@ class Pusher implements WampServerInterface
 
     public function onUnSubscribe(ConnectionInterface $conn, $topic)
     {
+        echo 'Unsub';
     }
     
     public function onOpen(ConnectionInterface $conn)
     {
+        echo 'Open';
     }
     
     public function onClose(ConnectionInterface $conn)
     {
+        echo 'Close';
     }
     
     public function onCall(ConnectionInterface $conn, $id, $topic, array $params)
@@ -66,5 +73,6 @@ class Pusher implements WampServerInterface
     
     public function onError(ConnectionInterface $conn, \Exception $e)
     {
+        echo 'ERROR';
     }
 }

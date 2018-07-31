@@ -14,12 +14,12 @@ class SensorRabbitMQ extends Sensor
     public function __construct(string $topic, int $port = null)
     {
 
-        
+
         parent::__construct($topic, $port);
 
 
 
-        $this->connection = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
+        $this->connection = new AMQPStreamConnection('localhost', $this->port, 'guest', 'guest');
         $this->channel = $this->connection->channel();
 
         $this->channel->exchange_declare($this->topic, 'fanout', false, false, false);
