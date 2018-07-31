@@ -9,11 +9,17 @@
 <head>
     <meta charset="utf-8" />
     <title>Realtime Client</title>
-    <script src="/autobahn.min.js" type="text/javascript"></script>
+
+    <script src="js/when.min.js" type="text/javascript"></script>
+    <script src="js/autobahn.min.js" type="text/javascript"></script>
+    
 </head>
 
 <body>
 
+    <h1>MG Sensor Display</h1>
+    <p> Se Console </p>
+    
 <script>
 
     var connection = new autobahn.Connection({url: 'ws://127.0.0.1:8080/'});
