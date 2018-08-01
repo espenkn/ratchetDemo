@@ -5,16 +5,63 @@
     <title>Realtime Client</title>
 
     <script src="js/autobahn.alt.js" type="text/javascript"></script>
-    
+    <link href="css/reset.css" rel="stylesheet" type="text/css"  />
+    <link href="css/default.css" rel="stylesheet" type="text/css"  />
+    <link href="css/google_web_fonts.css" rel="stylesheet" type="text/css"  />
+
 </head>
 
 <body>
 
-    <h1>MG Sensor Display</h1>
-    <p> Se Console </p>
+    
+
+<div class="main">
+    <div class="sensor_display">
+        <section class="header">
+            <h1>MG Sensor Display</h1> 
+        </section>
+        <section class="speedometer">
+            <p><span id="speed">100</span>  <sup>Km</sup>/<sub>h</sub>​</p>
+        </section>
+        <section class="gps_data">
+            <table>
+                <tr>
+                    <td>
+                        <p>Lat: &nbsp;&nbsp; </p> 
+                    </td>
+                    <td>
+                        <span id="lat">59.911491</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>Long: &nbsp;&nbsp; </p> 
+                    </td>
+                    <td>
+                        <span id="long">10.757933</span>
+                    </td>
+                </tr>
+            </table>
+        
+      
+        </section>
+        <section class="telemetri">
+            <p>Temp: <span id="temperature">28</span> &deg;C </p>
+        </section>
+        <section class="footer"> 
+            <p>~ Drive Safe ~</p>
+        </section>
+    </div>
+</div>
     
 <script>
+                    
 
+var handlers = {
+    'GPS' : HandlerSpeed,
+    'coordinates' : HandlerCoordinates,
+    'temperature' : handlerTemperature
+};
 
 var wamp = (function (autobhanInstance) {
 
@@ -22,10 +69,11 @@ var wamp = (function (autobhanInstance) {
 
         wsuri : 'ws://127.0.0.1:8080',
 
+        shutdown : false,
         ws_not_supported : false,
         ab_sess : null,
 
-        timers : {'ab_reconnect' : null},
+        timers : {'reconnect' : null},
 
         last_topic : null,
         last_data : null,
@@ -45,28 +93,41 @@ var wamp = (function (autobhanInstance) {
         },
 
         ab_reconnect_timer : function() {
-            if (this.timers.ab_reconnect == null) {        
-                this.timers.ab_reconnect = setInterval(this.ab_reconnect_function, 5000);
+            if (this.timers.reconnect == null) {        
+                this.timers.reconnect = setInterval(this.reconnect_function, 5000);
             }
             
             return;
         },
 
+        stop : function() {
+            shutdown = true;
+            this.ab_sess.close();
+        },
+        start : function() {
+            shutdown = false;
+            this.ABStart();
+        },
+
         stopTimer : function(timername) {
-            if (typeof this.timers.timername == "undefined") {
+
+            a = this.timers;
+            console.log(timername);
+
+            if (!this.timers.hasOwnProperty(timername)) {
                 return;
             }
             
-            clearInterval(this.timers.timername);
-            this.timers.timername = null;
+            clearInterval(this.timers[timername]);
+            this.timers[timername] = null;
         },
 
-        ab_reconnect_function : function() {
+        reconnect_function : function() {
             if (this.ws_not_supported == true) {
                 return;
             }
                 
-            this.ABStart();
+            wamp.ABStart();
         },
 
         ABStart : function(other_wsuri) {
@@ -95,10 +156,8 @@ var wamp = (function (autobhanInstance) {
                 this.ab_sess.close();
             }
 
-                
-            console.log(autobhanInstance);
 
-            autobhanInstance.Session(connect_wsuri, 
+            autobhanInstance.connect(connect_wsuri, 
                 function (session) { // WAMP session was established
                 
                     wamp.link = 'up';
@@ -111,9 +170,16 @@ var wamp = (function (autobhanInstance) {
                 
                     wamp.ab_sess = session;
 
+                    for(var handler in handlers) {
+                        wamp.ab_sess.subscribe(handler,  handlers[handler]);
+                    }
+                    /*
                     // Register all topics to subscribe to
-                    wamp.ab_sess.subscribe('GPS', wamp.subscriber_handler);
-                
+                    wamp.ab_sess.subscribe('GPS', wamp.HandlerSpeed);
+                    wamp.ab_sess.subscribe('coordinates', wamp.HandlerCoordinates);
+                    wamp.ab_sess.subscribe('temperature', wamp.handlerTemperature);
+                    */
+
                 }, function (code, reason) { // WAMP session is gone
                 
                     // Unreg session
@@ -128,8 +194,11 @@ var wamp = (function (autobhanInstance) {
                     
                     wamp.link = 'down';
                 
-                    // Start reconnect timer
-                    wamp.ab_reconnect_timer();
+                    if (!shutdown) {
+                        // Start reconnect timer
+                        wamp.ab_reconnect_timer();    
+                    }
+                    
                     
                 }, { // The session options
                 'maxRetries': 0,
@@ -140,11 +209,33 @@ var wamp = (function (autobhanInstance) {
     }
 })(window.ab);
 
+/*
+wamp.__proto__.HandlerSpeed = function (topic, data) {
+    console.log(data);
+    document.getElementById('speed').innerHTML = data.data;
+}
+*/
+
+function HandlerSpeed(topic, data) {
+    console.log(data);
+    document.getElementById('speed').innerHTML = data.data;
+}
+
+function HandlerCoordinates(topic, data) {
+    console.log(data);
+    document.getElementById('lat').innerHTML = data.data[0];
+    document.getElementById('long').innerHTML = data.data[1];
+}
+
+function handlerTemperature(topic, data) {
+    console.log(data);
+    document.getElementById('temperature').innerHTML = data.data;
+}
 
 
 window.onload = function() {
-    wamp.ABStart();
-};
+    wamp.start();
+}
 
 </script>
 

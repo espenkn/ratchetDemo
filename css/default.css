@@ -1,0 +1,74 @@
+.main {
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 200px;
+    max-width: 500px;
+}
+
+.sensor_display {
+    
+    display: grid;
+}
+
+.sensor_display {
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 30px 150px 100px auto;
+    grid-template-areas: 
+    "header header"
+    "hastighet hastighet"
+    "koordinater temperatur"
+    "footer footer";
+}
+
+.header {
+    grid-area: header;
+    justify-self: center;
+    font-family: 'Kelly Slab', cursive;
+    align-self: center;
+}
+.speedometer>p>sub {
+    vertical-align: baseline;
+    vertical-align: sub;
+    
+}
+.speedometer>p>sup {
+    vertical-align: super;
+}
+.speedometer {
+    grid-area: hastighet;
+    font-family: 'Poiret One', cursive;
+    font-size: 80px;
+    justify-self: center;
+    align-self: center;
+}
+.gps_data {
+    font-size: 30px;
+    font-family: 'Comfortaa';
+    grid-area: koordinater;
+    align-self: center;
+    justify-self: left;
+}
+.telemetri {
+    font-size: 30px;
+    font-family: 'Coda';
+    grid-area: temperatur;
+    align-self: center;
+    justify-self: right;
+}
+.footer {
+    font-size: 30px;
+    grid-area: footer;
+    justify-self: center;
+    font-family: 'Kelly Slab', cursive;
+    align-self: center;
+}
+
+.gps_data {
+    display: grid;
+}
+
+.space {
+    width: 100px;
+    display: inline-grid; 
+    grid-template-columns: 40% auto;
+}

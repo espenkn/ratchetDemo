@@ -5,6 +5,7 @@ class SensorZMQ extends Sensor
 
     protected $messageQueue;
     protected $socket;
+    protected $data_source;
 
     public function __construct(string $topic, int $port = null)
     {
@@ -16,12 +17,24 @@ class SensorZMQ extends Sensor
 
     }
 
+    public function register_data_source(callable $data_source) 
+    {
+        $this->data_source = $data_source;
+    }
+
     protected function getSensorData()
     {
+
+        if ($this->data_source == null) {
+            $data = '';
+        } else {
+            $data = call_user_func($this->data_source);
+        }
+
         //Just generate some data
         return [
             'topic' => $this->topic,
-            'time' => time(),
+            'data' => $data,
         ];
     }
 

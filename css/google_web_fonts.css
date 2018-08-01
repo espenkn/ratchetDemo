@@ -1,0 +1,31 @@
+/*
+font-family: 'Comfortaa', cursive;
+font-family: 'Poiret One', cursive;
+font-family: 'Coda', cursive;
+font-family: 'Kelly Slab', cursive;
+*/
+
+@font-face {
+  font-family: 'Coda';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Coda Regular'), local('Coda-Regular'), url(fonts/Coda-Regular.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Comfortaa';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Comfortaa Regular'), local('Comfortaa-Regular'), url(fonts/Comfortaa-Regular.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Kelly Slab';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Kelly Slab'), local('KellySlab-Regular'), url(fonts/KellySlab-Regular.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Poiret One';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Poiret One'), local('PoiretOne-Regular'), url(fonts/PoiretOne-Regular.ttf) format('truetype');
+}
