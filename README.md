@@ -35,3 +35,8 @@ Så åpner du en nettleser på localhost:8000
 
 
 Og da bør demoen kjøre....
+
+
+Jeg drev også i samme slengen å prøvde å støtte RabbitMQ, men har ikke kommet langt nok til å teste dette enda...
+
+
