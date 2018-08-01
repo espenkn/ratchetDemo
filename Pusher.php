@@ -16,7 +16,8 @@ class Pusher implements WampServerInterface
     public function onSubscribe(ConnectionInterface $conn, $topic)
     {
 
-        echo 'new subsciber';
+        var_dump($topic);
+
 
         $this->subscribedTopics[$topic->getId()] = $topic;
     }
@@ -25,8 +26,6 @@ class Pusher implements WampServerInterface
      * @param string JSON'ified string we'll receive from ZeroMQ
      */
     public function onSensorEntry($entry) {
-
-        echo 'Revice data';
 
         
         $entryData = json_decode($entry, true);
