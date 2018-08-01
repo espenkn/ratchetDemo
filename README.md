@@ -29,7 +29,7 @@ Så for å teste eksempelet må du åpne 3 terminaler.
 
 2. I den andre så navigerer du til bin folderen og starter `Publisher.php`
 
-3. I den tredje så navigerer du til roten av prosjektet og starter PHP sin innebygget dev server `alias serve='php -S localhost:8000'`
+3. I den tredje så navigerer du til roten av prosjektet og starter PHP sin innebygget dev server `php -S localhost:8000`
 
 Så åpner du en nettleser på localhost:8000 
 
