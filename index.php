@@ -67,7 +67,8 @@ var wamp = (function (autobhanInstance) {
 
     return {
 
-        wsuri : 'ws://127.0.0.1:8080',
+        //wsuri : 'ws://127.0.0.1:8080',
+        wsuri : 'ws:' + window.location.host,
 
         shutdown : false,
         ws_not_supported : false,
